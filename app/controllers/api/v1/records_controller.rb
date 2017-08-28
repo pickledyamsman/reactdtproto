@@ -1,5 +1,4 @@
 class Api::V1::RecordsController < ApplicationController
-  before_action :set_record, only: [:update, :destroy]
   
   def index
     render json: {
@@ -22,10 +21,6 @@ class Api::V1::RecordsController < ApplicationController
 
   def record_params
     params.require(:record).permit(:title, :artist, :year)
-  end
-
-  def set_record
-    @record = Record.find(params[:id])
   end
 
   def sort_by

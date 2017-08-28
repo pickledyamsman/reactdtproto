@@ -29,16 +29,16 @@ var RecordApplication = React.createClass({
     this.setState({ records: records });
   },
 
-  handleSortColumn: function(title, order) {
-    if (this.state.sort != title) {
+  handleSortColumn: function(name, order) {
+    if (this.state.sort != name) {
       order = 'asc';
     }
     $.ajax({
       url: '/api/v1/records',
-      data: { sort_by: title, order: order, page: this.state.page },
+      data: { sort_by: name, order: order, page: this.state.page },
       method: 'GET',
       success: function(data) {
-        this.setState({ records: data.records, sort: title, order: order });
+        this.setState({ records: data.records, sort: name, order: order });
       }.bind(this),
       error: function(xhr, status, error) {
         alert('Cannot sort records: ', error);
@@ -53,6 +53,9 @@ var RecordApplication = React.createClass({
   render: function() {
     return(
       <div className="container">
+        <div className="jumbotron">
+          <h1>React Datatable Prototype</h1>
+        </div>
         <div className="row">
           <div className="col-md-4">
             <SearchForm handleSearch={this.handleSearch} />

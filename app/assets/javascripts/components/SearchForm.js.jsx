@@ -13,12 +13,13 @@ var SearchForm = React.createClass({
       }
     });
   },
+  
   render: function() {
     return(
       <input onChange={this.handleSearch}
              type="text"
              className="form-control"
-             placeholder="Type a search phrase..."
+             placeholder="Search"
              ref="query" />
     )
   }

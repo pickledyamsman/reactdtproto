@@ -29,7 +29,7 @@ class Api::V1::RecordsController < ApplicationController
 
   def search
     query = params[:query]
-    records = Record.where('title LIKE ? OR artist LIKE ? OR year LIKE ?',
+    records = Record.where('title LIKE ? OR artist LIKE ? OR CAST(year AS text) LIKE ?',
                            "%#{query}%", "%#{query}%", "%#{query}%")
                     .paginate(page: page)
     render json: records

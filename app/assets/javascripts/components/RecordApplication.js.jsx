@@ -29,21 +29,6 @@ var RecordApplication = React.createClass({
     this.setState({ records: records });
   },
 
-  handleAdd: function() {
-    this.getDataFromApi(this.state.page);
-  },
-
-  handleDeleteRecord: function() {
-    this.getDataFromApi(this.state.page);
-  },
-
-  handleUpdateRecord: function(old_record, record) {
-    var records = this.state.records.slice();
-    var index = records.indexOf(old_record);
-    records.splice(index, 1, record);
-    this.setState({ records: records });
-  },
-
   handleSortColumn: function(title, order) {
     if (this.state.sort != title) {
       order = 'asc';
@@ -72,17 +57,12 @@ var RecordApplication = React.createClass({
           <div className="col-md-4">
             <SearchForm handleSearch={this.handleSearch} />
           </div>
-          <div className="col-md-8">
-            <NewForm handleAdd={this.handleAdd} />
-          </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <RecordTable records={this.state.records}
                         sort={this.state.sort}
                         order={this.state.order}
-                        handleDeleteRecord={this.handleDeleteRecord}
-                        handleUpdateRecord={this.handleUpdateRecord}
                         handleSortColumn={this.handleSortColumn} />
             <Pagination page={this.state.page}
                         pages={this.state.pages}

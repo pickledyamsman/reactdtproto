@@ -1,11 +1,4 @@
 var RecordTable = React.createClass({
-  handleDeleteRecord: function() {
-    this.props.handleDeleteRecord();
-  },
-
-  handleUpdateRecord: function(old_record, record) {
-    this.props.handleUpdateRecord(old_record, record);
-  },
 
   handleSortColumn: function(title, order) {
     this.props.handleSortColumn(title, order);
@@ -15,9 +8,7 @@ var RecordTable = React.createClass({
     var records = [];
     this.props.records.forEach(function(record) {
       records.push(<Record record={record}
-                         key={'record' + record.id}
-                         handleDeleteRecord={this.handleDeleteRecord}
-                         handleUpdateRecord={this.handleUpdateRecord} />)
+                         key={'record' + record.id} />)
     }.bind(this));
 
     return(
@@ -45,7 +36,6 @@ var RecordTable = React.createClass({
                           order={this.props.order}
                           handleSortColumn={this.handleSortColumn}/>
             </th>
-            <th className="col-md-2">Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -9,23 +9,6 @@ class Api::V1::RecordsController < ApplicationController
       pages: Record.pages
     }
   end    
-  
-  def create
-    record = Record.new(record_params)
-    if record.save
-      render json: record
-    else
-      render nothing: true, status: :bad_request
-    end
-  end
-
-  def update
-    if @record.update(record_params)
-      render json: @record
-    else
-      render nothing: true, status: :unprocessable_entity
-    end
-  end
 
   def search
     query = params[:query]
@@ -34,11 +17,6 @@ class Api::V1::RecordsController < ApplicationController
                     .paginate(page: page)
     render json: records
   end    
-
-  def destroy
-    @record.destroy
-    head :no_content
-  end
 
   private
 

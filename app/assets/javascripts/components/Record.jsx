@@ -99,16 +99,6 @@ var Record = React.createClass({
                  ref="year"
           />
         </td>
-        <td>
-          <a className="btn btn-success btn-sm"
-             onClick={this.handleUpdate}>
-            Save
-          </a>
-          <a className="btn btn-default btn-sm"
-             onClick={this.handleToggle} >
-            Cancel
-          </a>
-        </td>
       </tr>
     );
   },
@@ -120,25 +110,11 @@ var Record = React.createClass({
         <td>{record.title}</td>
         <td>{record.artist}</td>
         <td>{record.year}</td>
-        <td>
-          <a className="btn btn-danger btn-xs"
-             onClick={this.handleDelete} >
-            Delete
-          </a>
-          <a className="btn btn-primary btn-xs"
-             onClick={this.handleToggle} >
-             Edit
-          </a>
-        </td>
       </tr>
     );
   },
 
   render: function() {
-    if (this.state.edit) {
-      return(this.renderForm());
-    } else {
-      return(this.renderRecord());
-    }
+    return(this.renderRecord());
   }
 });

@@ -4,13 +4,14 @@ var FakeDataTable = React.createClass({
     this.props.handleSortColumn(name, order);
   },
 
-  // refactor to call Game or Record
+  // refactor to call eleemnt dynamically
   handleTableType: function(tableData) {
     if(this.props.tableType == 'games') {
       return this.props.tableData.forEach(function(y) {
-        tableData.push(<Game y={y} key={'y' + y.id} />)
+        tableData.push(
+          <Game y={y} key={'y' + y.id} />
+        )
       }.bind(this));
-
     } else if (this.props.tableType == 'records') {
       return this.props.tableData.forEach(function(y) {
         tableData.push(

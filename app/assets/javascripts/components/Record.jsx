@@ -9,9 +9,9 @@ var Record = React.createClass({
   render: function() {
     return(
       <tr>
-        <td>{this.props.record.title}</td>
-        <td>{this.props.record.artist}</td>
-        <td>{this.props.record.year}</td>
+        <td>{this.props.y.title}</td>
+        <td>{this.props.y.artist}</td>
+        <td>{this.props.y.year}</td>
       </tr>
     );
   }

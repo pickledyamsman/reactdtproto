@@ -10,4 +10,7 @@
 	Record.create(title: "Record #{i}",
 								artist: "Artist #{i}",
 								year: i + 2000)
+  Game.create(name: "Game #{i}",
+              genre: "Genre #{i}",
+              publisher: "Publisher #{i}")
 end

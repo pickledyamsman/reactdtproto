@@ -1,5 +1,5 @@
-class Record < ApplicationRecord
-  class << self
+class Game < ApplicationRecord
+	class << self
     def per_page
       10
     end

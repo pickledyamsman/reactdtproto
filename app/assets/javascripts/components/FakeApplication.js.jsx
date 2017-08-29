@@ -1,23 +1,27 @@
-var RecordApplication = React.createClass({
+var FakeApplication = React.createClass({
   getInitialState: function() {
-    return { records: [],
+    return { arr: [],
              sort: "title",
              order: "asc",
              page: 1,
-             pages: 0 };
+             pages: 0,
+             type: this.props.type,
+             headers: this.props.headers };
   },
 
   componentDidMount: function() {
-    this.getDataFromApi(this.state.page);
+    this.handleChangePage(this.state.page);
   },
 
-  getDataFromApi: function(page) {
+  getDataFromApi: function(page, type) {
     var self = this;
     $.ajax({
-      url: '/api/v1/records',
+      url: '/api/v1/' + type,
       data: { page: page },
       success: function(data) {
-        self.setState({ records: data.records, pages: parseInt(data.pages), page: parseInt(data.page) });
+        self.setState({ arr: data.table,
+                        pages: parseInt(data.pages),
+                        page: parseInt(data.page) });
       },
       error: function(xhr, status, error) {
         alert('Cannot get data from API: ', error);
@@ -25,29 +29,31 @@ var RecordApplication = React.createClass({
     });
   },
 
-  handleSearch: function(records) {
-    this.setState({ records: records });
-  },
-
   handleSortColumn: function(name, order) {
     if (this.state.sort != name) {
       order = 'asc';
     }
     $.ajax({
-      url: '/api/v1/records',
+      url: '/api/v1/' + this.state.type,
       data: { sort_by: name, order: order, page: this.state.page },
       method: 'GET',
       success: function(data) {
-        this.setState({ records: data.records, sort: name, order: order });
+        this.setState({ arr: data.table,
+                        sort: name,
+                        order: order });
       }.bind(this),
       error: function(xhr, status, error) {
-        alert('Cannot sort records: ', error);
+        alert('Cannot sort' + type + ': ', error);
       }
     });
   },
 
+  handleSearch: function(type) {
+    this.setState({ arr: type });
+  },
+
   handleChangePage: function(page) {
-    this.getDataFromApi(page);
+    this.getDataFromApi(page, this.state.type);
   },
 
   render: function() {
@@ -58,15 +64,18 @@ var RecordApplication = React.createClass({
         </div>
         <div className="row">
           <div className="col-md-4">
-            <SearchForm handleSearch={this.handleSearch} />
+            <SearchForm handleSearch={this.handleSearch}
+                        searchType={this.state.type} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <RecordTable records={this.state.records}
-                        sort={this.state.sort}
-                        order={this.state.order}
-                        handleSortColumn={this.handleSortColumn} />
+            <FakeDataTable tableData={this.state.arr}
+                           tableHeaders={this.state.headers}
+                           sort={this.state.sort}
+                           order={this.state.order}
+                           handleSortColumn={this.handleSortColumn}
+                           tableType={this.state.type} />
             <Pagination page={this.state.page}
                         pages={this.state.pages}
                         handleChangePage={this.handleChangePage} />

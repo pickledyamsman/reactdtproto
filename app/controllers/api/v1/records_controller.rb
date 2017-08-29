@@ -2,7 +2,7 @@ class Api::V1::RecordsController < ApplicationController
   
   def index
     render json: {
-      records: Record.paginate(page: page)
+      table: Record.paginate(page: page)
                      .order(sort_by + ' ' + order),
       page: page,
       pages: Record.pages

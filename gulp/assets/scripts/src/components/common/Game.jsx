@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Game = ({name, genre, publisher}) => {
+const Game = ({y}) => {
   return(
     <tr>
-      <td>{this.props.y.name}</td>
-      <td>{this.props.y.genre}</td>
-      <td>{this.props.y.publisher}</td>
+      <td>{y.name}</td>
+      <td>{y.genre}</td>
+      <td>{y.publisher}</td>
     </tr>
   );
 }

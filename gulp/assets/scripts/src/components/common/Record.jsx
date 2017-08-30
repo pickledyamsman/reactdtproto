@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Record = ({title, artist, year}) => {
+const Record = ({y}) => {
   return(
     <tr>
-      <td>{this.props.y.name}</td>
-      <td>{this.props.y.genre}</td>
-      <td>{this.props.y.publisher}</td>
+      <td>{y.title}</td>
+      <td>{y.artist}</td>
+      <td>{y.year}</td>
     </tr>
   );
 }

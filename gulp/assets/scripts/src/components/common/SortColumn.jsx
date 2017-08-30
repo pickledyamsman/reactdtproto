@@ -24,3 +24,5 @@ class SortColumn extends React.Component {
   }
   
 };
+
+export default SortColumn

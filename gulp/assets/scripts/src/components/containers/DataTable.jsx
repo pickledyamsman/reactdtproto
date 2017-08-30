@@ -26,7 +26,7 @@ class DataTable extends React.Component {
     }
   }
 
-  handleHeaders(tableHead, sort, order, sortColumn) {
+  handleHeaders(tableHead, sort, order, handleSortColumn) {
     return this.props.tableHeaders.forEach(function(x) {
       tableHead.push(
         <th className="col-md-2 sortable" key={x}>
@@ -34,17 +34,17 @@ class DataTable extends React.Component {
                       text={x}
                       sort={sort}
                       order={order}
-                      handleSortColumn={sortColumn} />
+                      handleSortColumn={handleSortColumn} />
         </th>)
     })
   }
 
   render() {
-    var tableHead = [];
+    const tableHead = [];
     this.handleHeaders(tableHead, this.props.sort,
                        this.props.order, this.handleSortColumn);
 
-    var tableData = [];
+    const tableData = [];
     this.handleTableType(tableData);
 
     return(

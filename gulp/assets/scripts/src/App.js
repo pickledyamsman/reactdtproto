@@ -18,7 +18,7 @@ export default class App extends React.Component {
     this.handleChangePage(this.state.page);
   }
 
-  getDataFromApi(page, type) {
+  getDataFromApi = (page, type) => {
     var self = this;
     $.ajax({
       url: '/api/v1/' + type,
@@ -76,11 +76,11 @@ export default class App extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <DataTable tableData={this.state.arr}
-                           tableHeaders={this.state.headers}
-                           sort={this.state.sort}
-                           order={this.state.order}
-                           handleSortColumn={this.handleSortColumn}
-                           tableType={this.state.type} />
+                       tableHeaders={this.state.headers}
+                       sort={this.state.sort}
+                       order={this.state.order}
+                       handleSortColumn={this.handleSortColumn}
+                       tableType={this.state.type} />
             <Pagination page={this.state.page}
                         pages={this.state.pages}
                         handleChangePage={this.handleChangePage} />

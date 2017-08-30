@@ -1,13 +1,13 @@
+#
 class Api::V1::RecordsController < ApplicationController
-  
   def index
     render json: {
       table: Record.paginate(page: page)
-                     .order(sort_by + ' ' + order),
+                   .order(sort_by + ' ' + order),
       page: page,
       pages: Record.pages
     }
-  end    
+  end
 
   def search
     query = params[:query]
@@ -15,7 +15,7 @@ class Api::V1::RecordsController < ApplicationController
                            "%#{query}%", "%#{query}%", "%#{query}%")
                     .paginate(page: page)
     render json: records
-  end    
+  end
 
   private
 
@@ -24,13 +24,11 @@ class Api::V1::RecordsController < ApplicationController
   end
 
   def sort_by
-    %w(title
-       artist
-       year).include?(params[:sort_by]) ? params[:sort_by] : 'title'
+    %w[title artist year].include?(params[:sort_by]) ? params[:sort_by] : 'title'
   end
 
   def order
-    %w(asc desc).include?(params[:order]) ? params[:order] : 'asc'
+    %w[asc desc].include?(params[:order]) ? params[:order] : 'asc'
   end
 
   def page

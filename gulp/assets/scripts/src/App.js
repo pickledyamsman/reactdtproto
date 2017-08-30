@@ -18,10 +18,10 @@ export default class App extends React.Component {
     this.handleChangePage(this.state.page);
   }
 
-  getDataFromApi = (page, type) => {
+  getDataFromApi = (page) => {
     var self = this;
     $.ajax({
-      url: '/api/v1/' + type,
+      url: '/api/v1/' + this.state.type,
       data: { page: page },
       success: function(data) {
         self.setState({ arr: data.table,
@@ -34,7 +34,7 @@ export default class App extends React.Component {
     });
   }
 
-  handleSortColumn(name, order) {
+  handleSortColumn = (name, order) => {
     if (this.state.sort != name) {
       order = 'asc';
     }
@@ -53,12 +53,12 @@ export default class App extends React.Component {
     });
   }
 
-  handleSearch(type) {
+  handleSearch = (type) => {
     this.setState({ arr: type });
   }
 
-  handleChangePage(page) {
-    this.getDataFromApi(page, this.state.type);
+  handleChangePage = (page) => {
+    this.getDataFromApi(page);
   }
 
   render() {

@@ -2,7 +2,7 @@ import React from 'react'
 
 class SortColumn extends React.Component {
   
-  handleSort(e) {
+  handleSort = (e) => {
     e.preventDefault();
     var order = this.props.order == 'desc' ? 'asc' : 'desc';
     this.props.handleSortColumn(this.props.name, order);

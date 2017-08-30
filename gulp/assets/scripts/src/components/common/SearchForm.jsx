@@ -2,7 +2,7 @@ import React from 'react'
 
 class SearchForm extends React.Component {
   
-  handleSearch() {
+  handleSearch = () => {
     var query = ReactDOM.findDOMNode(this.refs.query).value;
     var self = this;
     $.ajax({

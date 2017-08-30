@@ -5,7 +5,7 @@ import SortColumn from '../common/SortColumn'
 
 class DataTable extends React.Component {
 
-  handleSortColumn(name, order) {
+  handleSortColumn = (name, order) => {
     this.props.handleSortColumn(name, order);
   }
 

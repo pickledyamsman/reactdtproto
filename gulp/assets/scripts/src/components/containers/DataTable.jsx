@@ -2,6 +2,7 @@ import React from 'react'
 import Game from '../common/Game'
 import Record from '../common/Record'
 import SortColumn from '../common/SortColumn'
+import DataTableView from '../views/DataTable'
 
 class DataTable extends React.Component {
 
@@ -11,18 +12,19 @@ class DataTable extends React.Component {
 
   // refactor to call eleemnt dynamically
   handleTableType(tableData) {
-    if(this.props.tableType == 'games') {
-      return this.props.tableData.forEach(function(y) {
-        tableData.push(
-          <Game y={y} key={'y' + y.id} />
-        )
-      }.bind(this));
-    } else if (this.props.tableType == 'records') {
-      return this.props.tableData.forEach(function(y) {
-        tableData.push(
-          <Record y={y} key={'y' + y.id} />
-        )
-      }.bind(this));
+    return this.props.tableData.forEach(function(y) {
+      tableData.push(
+        this.renderModel(y)
+      )
+    }.bind(this));
+  }
+
+  renderModel = (y) => {
+    switch(this.props.tableType) {
+      case 'records':
+        return <Record y={y} key={'y' + y.id} />
+      case 'games':
+        return <Game y={y} key={'y' + y.id} />
     }
   }
 
@@ -48,19 +50,12 @@ class DataTable extends React.Component {
     this.handleTableType(tableData);
 
     return(
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            {tableHead}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData}
-        </tbody>
-      </table>
+      <DataTableView 
+        tableHead={tableHead}
+        tableData={tableData} >
+      </DataTableView>
     )
   }
-
 }
 
 export default DataTable

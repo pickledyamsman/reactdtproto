@@ -1,22 +1,27 @@
-var FakeApplication = React.createClass({
-  getInitialState: function() {
-    return { arr: [],
-             sort: "title",
-             order: "asc",
-             page: 1,
-             pages: 0,
-             type: this.props.type,
-             headers: this.props.headers };
-  },
+import React from 'react'
+import SearchForm from '../common/SearchForm'
+import Pagination from '../common/Pagination'
+import DataTable from './DataTable'
 
-  componentDidMount: function() {
+export default class App extends React.Component {
+  state = {
+    arr: [],
+    sort: "title",
+    order: "asc",
+    page: 1,
+    pages: 0,
+    type: this.props.type,
+    headers: this.props.headers
+  }
+
+  componentDidMount() {
     this.handleChangePage(this.state.page);
-  },
+  }
 
-  getDataFromApi: function(page, type) {
+  getDataFromApi = (page) => {
     var self = this;
     $.ajax({
-      url: '/api/v1/' + type,
+      url: '/api/v1/' + this.state.type,
       data: { page: page },
       success: function(data) {
         self.setState({ arr: data.table,
@@ -27,9 +32,9 @@ var FakeApplication = React.createClass({
         alert('Cannot get data from API: ', error);
       }
     });
-  },
+  }
 
-  handleSortColumn: function(name, order) {
+  handleSortColumn = (name, order) => {
     if (this.state.sort != name) {
       order = 'asc';
     }
@@ -46,17 +51,17 @@ var FakeApplication = React.createClass({
         alert('Cannot sort' + type + ': ', error);
       }
     });
-  },
+  }
 
-  handleSearch: function(type) {
+  handleSearch = (type) => {
     this.setState({ arr: type });
-  },
+  }
 
-  handleChangePage: function(page) {
-    this.getDataFromApi(page, this.state.type);
-  },
+  handleChangePage = (page) => {
+    this.getDataFromApi(page);
+  }
 
-  render: function() {
+  render() {
     return(
       <div className="container">
         <div className="jumbotron">
@@ -70,12 +75,12 @@ var FakeApplication = React.createClass({
         </div>
         <div className="row">
           <div className="col-md-12">
-            <FakeDataTable tableData={this.state.arr}
-                           tableHeaders={this.state.headers}
-                           sort={this.state.sort}
-                           order={this.state.order}
-                           handleSortColumn={this.handleSortColumn}
-                           tableType={this.state.type} />
+            <DataTable tableData={this.state.arr}
+                       tableHeaders={this.state.headers}
+                       sort={this.state.sort}
+                       order={this.state.order}
+                       handleSortColumn={this.handleSortColumn}
+                       tableType={this.state.type} />
             <Pagination page={this.state.page}
                         pages={this.state.pages}
                         handleChangePage={this.handleChangePage} />
@@ -84,4 +89,4 @@ var FakeApplication = React.createClass({
       </div>
     )
   }
-});
+}

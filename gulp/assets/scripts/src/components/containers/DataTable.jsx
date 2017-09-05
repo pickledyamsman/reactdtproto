@@ -10,16 +10,15 @@ class DataTable extends React.Component {
     this.props.handleSortColumn(name, order);
   }
 
-  // refactor to call eleemnt dynamically
   handleTableType(tableData) {
     return this.props.tableData.forEach(function(y) {
       tableData.push(
-        this.renderModel(y)
+        this.switchModel(y)
       )
     }.bind(this));
   }
 
-  renderModel = (y) => {
+  switchModel = (y) => {
     switch(this.props.tableType) {
       case 'records':
         return <Record y={y} key={'y' + y.id} />

@@ -11,6 +11,7 @@ class DataTable extends React.Component {
   }
 
   handleTableType(tableData) {
+    console.log(tableData)
     return this.props.tableData.forEach(function(y) {
       tableData.push(
         this.switchModel(y)

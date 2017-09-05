@@ -18,13 +18,20 @@ export default class App extends React.Component {
     this.handleChangePage(this.state.page);
   }
 
-  getDataFromApi = (page) => {
+  getDataFromApi = (name, order, page) => {
     var self = this;
+
+    if (this.state.sort != name) {
+      order = 'asc';
+    }
+
     $.ajax({
       url: '/api/v1/' + this.state.type,
-      data: { page: page },
+      data: { sort_by: name, order: order, page: page },
       success: function(data) {
         self.setState({ arr: data.table,
+                        sort: name,
+                        order: order,
                         pages: parseInt(data.pages),
                         page: parseInt(data.page) });
       },
@@ -34,31 +41,12 @@ export default class App extends React.Component {
     });
   }
 
-  handleSortColumn = (name, order) => {
-    if (this.state.sort != name) {
-      order = 'asc';
-    }
-    $.ajax({
-      url: '/api/v1/' + this.state.type,
-      data: { sort_by: name, order: order, page: this.state.page },
-      method: 'GET',
-      success: function(data) {
-        this.setState({ arr: data.table,
-                        sort: name,
-                        order: order });
-      }.bind(this),
-      error: function(xhr, status, error) {
-        alert('Cannot sort' + type + ': ', error);
-      }
-    });
-  }
-
   handleSearch = (type) => {
     this.setState({ arr: type });
   }
 
   handleChangePage = (page) => {
-    this.getDataFromApi(page);
+    this.getDataFromApi(this.state.sort, this.state.order, page);
   }
 
   render() {
@@ -79,7 +67,7 @@ export default class App extends React.Component {
                        tableHeaders={this.state.headers}
                        sort={this.state.sort}
                        order={this.state.order}
-                       handleSortColumn={this.handleSortColumn}
+                       handleSortColumn={this.getDataFromApi}
                        tableType={this.state.type} />
             <Pagination page={this.state.page}
                         pages={this.state.pages}

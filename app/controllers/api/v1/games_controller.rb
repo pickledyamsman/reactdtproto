@@ -1,20 +1,16 @@
 #
 class Api::V1::GamesController < ApplicationController
   def index
+    query = params[:query]
+
     render json: {
-      table: Game.paginate(page: page)
+      table: Game.where('name LIKE ? OR genre LIKE ? OR publisher LIKE ?',
+                       "%#{query}%", "%#{query}%", "%#{query}%")
+                 .paginate(page: page)
                  .order(sort_by + ' ' + order),
       page: page,
       pages: Game.pages
     }
-  end
-
-  def search
-    query = params[:query]
-    games = Game.where('name LIKE ? OR genre LIKE ? OR publisher LIKE ?',
-                       "%#{query}%", "%#{query}%", "%#{query}%")
-                .paginate(page: page)
-    render json: games
   end
 
   private

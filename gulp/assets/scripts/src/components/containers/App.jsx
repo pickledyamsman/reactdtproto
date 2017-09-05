@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchForm from '../common/SearchForm'
 import Pagination from '../common/Pagination'
 import DataTable from './DataTable'
 
@@ -18,16 +17,16 @@ export default class App extends React.Component {
     this.handleChangePage(this.state.page);
   }
 
-  getDataFromApi = (name, order, page) => {
+  getDataFromApi = (name, order, page, query) => {
     var self = this;
-
+    var query = ReactDOM.findDOMNode(this.refs.query).value;
     if (this.state.sort != name) {
       order = 'asc';
     }
 
     $.ajax({
       url: '/api/v1/' + this.state.type,
-      data: { sort_by: name, order: order, page: page },
+      data: { sort_by: name, order: order, page: page, query: query },
       success: function(data) {
         self.setState({ arr: data.table,
                         sort: name,
@@ -39,10 +38,6 @@ export default class App extends React.Component {
         alert('Cannot get data from API: ', error);
       }
     });
-  }
-
-  handleSearch = (type) => {
-    this.setState({ arr: type });
   }
 
   handleChangePage = (page) => {
@@ -57,8 +52,11 @@ export default class App extends React.Component {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <SearchForm handleSearch={this.handleSearch}
-                        searchType={this.state.type} />
+            <input onChange={this.handleChangePage.bind(null, this.state.page)}
+                   type="text"
+                   className="form-control"
+                   placeholder="Search"
+                   ref="query" />
           </div>
         </div>
         <div className="row">
